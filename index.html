@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Oinkyyyyyyy 🌚🫶🏽</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{min-height:100vh; background:#ffd1dc; overflow:hidden; cursor:none; display:flex; justify-content:center; align-items:center;}
+
+/* ENVELOPE */
+#letterContainer{position:relative;width:500px;height:350px; cursor:pointer;}
+#envelope{position:absolute;width:100%;height:100%;background:#ffb6c1;border-radius:25px;box-shadow:0 0 30px rgba(255,105,180,.7);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;z-index:2;transition:transform 0.8s;}
+#envelope h2{color:white;font-size:2.2rem;margin-bottom:15px;text-shadow:0 0 10px #fff,0 0 20px #ff69b4;}
+#envelope p{color:white;font-size:1.3rem;text-shadow:0 0 5px #fff,0 0 10px #ff69b4;}
+#flap{position:absolute;top:0;left:0;width:100%;height:50%;background:#ff85c2;clip-path: polygon(0 0, 100% 0, 50% 100%);transform-origin:top;transition:transform 0.8s;z-index:3;}
+
+/* MAIN CONTENT */
+#mainContent{display:none; flex-direction:column; align-items:center; justify-content:center; position:fixed; inset:0;}
+
+/* LEFT SECRET */
+#magicMessage{position:fixed;top:50px;left:20px;max-width:220px;padding:10px;background:rgba(255,192,203,.5);border-radius:15px;color:black;font-weight:600;font-size:1rem;text-align:center;display:none;animation:float 3s ease-in-out infinite alternate,sparkleText 1.5s ease-in-out infinite alternate;}
+@keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}}
+@keyframes sparkleText{0%{text-shadow:0 0 5px #ff69b4,0 0 10px #ffc0cb;}50%{text-shadow:0 0 10px #ff1493,0 0 20px #ff85c2;}100%{text-shadow:0 0 5px #ff69b4,0 0 10px #ffc0cb;}}
+
+/* TITLE & CARD */
+h1{color:white;font-size:clamp(1.8rem,5vw,2.5rem);text-align:center;animation:bounce 2s infinite, glow 2.5s infinite alternate;z-index:2;margin-bottom:20px;}
+@keyframes bounce{50%{transform:translateY(-10px)}}
+@keyframes glow{from{text-shadow:0 0 10px #fff,0 0 20px #ff69b4;}to{text-shadow:0 0 20px #fff,0 0 35px #ffc0cb;}}
+.subtitle{color:white;margin-top:8px;text-align:center;z-index:2;font-size:1rem;}
+.card{background:rgba(255,255,255,.28);backdrop-filter:blur(8px);padding:25px;border-radius:25px;text-align:center;max-width:500px;min-height:200px;animation:float 4s ease-in-out infinite;box-shadow:0 0 25px rgba(255,105,180,.7);z-index:2;font-size:1.1rem;}
+#typingText{color:black;line-height:1.5;white-space:pre-wrap;margin-bottom:20px;text-shadow:0 0 5px #ffb6c1,0 0 10px #ffc0cb;}
+
+/* QUESTION */
+.question-text{margin-bottom:10px;font-weight:700;color:black;font-size:1.2rem;text-shadow:0 0 5px #ff69b4,0 0 10px #ffc0cb;animation:sparkleText 1.5s ease-in-out infinite alternate;}
+.question{display:flex;gap:15px;justify-content:center;}
+.q-btn{padding:10px 20px;border:none;border-radius:25px;background:#ff69b4;color:white;font-size:1rem;cursor:pointer;box-shadow:0 0 12px rgba(255,105,180,.8);transition:.3s;position:relative;}
+.q-btn:hover{background:#ff85c2;}
+.yes-btn{animation:yesGlow 2s ease-in-out infinite alternate;}
+.yes-btn:hover{animation:wiggle 0.6s ease infinite, yesGlow 2s ease-in-out infinite alternate;}
+@keyframes wiggle{0%,100%{transform:rotate(0deg) translateY(0);}25%{transform:rotate(-10deg) translateY(-2px);}50%{transform:rotate(10deg) translateY(-4px);}75%{transform:rotate(-8deg) translateY(-2px);}}
+@keyframes yesGlow{0%{box-shadow:0 0 5px #fff, 0 0 15px #ff69b4;}50%{box-shadow:0 0 15px #fff, 0 0 25px #ff85c2;}100%{box-shadow:0 0 5px #fff, 0 0 15px #ff69b4;}}
+
+/* SPARKLE CURSOR */
+.sparkle{position:fixed;pointer-events:none;font-size:12px;animation:sparkleFade .8s linear forwards;z-index:5;}
+@keyframes sparkleFade{to{transform:translateY(-20px) scale(1.5);opacity:0;}}
+
+/* EMOJI CONFETTI */
+.emoji-confetti{position:fixed;font-size:18px;pointer-events:none;animation:emojiBlast 1s ease-out forwards;z-index:6;}
+@keyframes emojiBlast{to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0;}}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:10;}
+.modal-box{background:linear-gradient(135deg,#ffd1dc,#ffb6c1);padding:25px;border-radius:25px;text-align:center;max-width:90%;animation:pop .4s ease;box-shadow:0 0 30px rgba(255,105,180,.9);}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1;}}
+.modal-box p{color:#ff1493;font-size:1rem;line-height:1.5;}
+.close-btn{margin-top:12px;padding:8px 18px;border:none;border-radius:20px;background:#ff69b4;color:white;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- LEFT SECRET -->
+<div id="magicMessage">u aree so muchh cutieeee then anything elsee u aree just a chlta phirta cutieness ki dukaan🌚🫶🏽 BAUNI 🌚🧿</div>
+
+<!-- LETTER -->
+<div id="letterContainer">
+  <div id="envelope">
+    <div id="flap"></div>
+    <h2>💌 Open Me</h2>
+    <p>Click to reveal your birthday surprise!</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+<h1 id="title">🎉 Happy Birthday Oinkyyyyyyy 🌚🫶🏽 🎂✨</h1>
+<p class="subtitle">Double-tap the title for a secret 🤫💖</p>
+<div class="card">
+  <p id="typingText"></p>
+  <div class="question-text">Are you cute? 🥰</div>
+  <div class="question">
+    <button class="q-btn yes-btn" id="yesBtn" onclick="alert('Of course you are super cute! 💖✨🌸')">Yes 🥰</button>
+    <button class="q-btn" id="noBtn">No 😳</button>
+  </div>
+</div>
+</div>
+
+<!-- SECRET MODAL -->
+<div class="modal" id="secret">
+  <div class="modal-box">
+    <p>
+      🐷💖 Oinkyyyyyyy 💖🐷<br><br>
+      tu sib meri hai okieeee 🫶🏽🥹💕<br>
+      kisi or ke pass gai too 😤👉👈<br>
+      mai kidnap karlunga 🚐😈💗✨<br><br>
+      heheh just kidding…<br>
+      but you are very precious to me 🌸🫶🏽💞
+    </p>
+    <button class="close-btn" onclick="closeSecret()">Awww 🥹💘</button>
+  </div>
+</div>
+
+<audio id="sparkleSound" preload="auto">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6c2a8a8c44.mp3" type="audio/mpeg">
+</audio>
+<audio id="envelopeSound" preload="auto">
+  <source src="https://www.soundjay.com/button/sounds/button-3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ENVELOPE OPEN
+const envelope=document.getElementById("envelope");
+const flap=document.getElementById("flap");
+const letterSound=document.getElementById("envelopeSound");
+const mainContent=document.getElementById("mainContent");
+
+envelope.addEventListener("click",()=>{
+  flap.style.transform="rotateX(-180deg)";
+  letterSound.play();
+  const sparkleInterval=setInterval(()=>{
+    const s=document.createElement("div"); s.className="sparkle";
+    const rect=envelope.getBoundingClientRect();
+    s.innerText=["✨","💖","🌸","⭐"][Math.floor(Math.random()*4)];
+    s.style.left=(rect.left+Math.random()*rect.width)+"px";
+    s.style.top=(rect.top+Math.random()*rect.height/2)+"px";
+    document.body.appendChild(s); setTimeout(()=>s.remove(),800);
+  },80);
+
+  setTimeout(()=>{
+    envelope.style.display="none";
+    askMagicWord();
+    clearInterval(sparkleInterval);
+  },1200);
+});
+
+// MAGIC WORD
+function askMagicWord(){
+  let magic="";
+  while(magic.toLowerCase() !== "oink oink"){
+    magic=prompt("Enter the magic word ✨ (required to continue)");
+    if(magic===null) magic="";
+  }
+  document.getElementById("magicMessage").style.display="block";
+  mainContent.style.display="flex";
+  document.body.classList.add('main');
+  startBirthday();
+}
+
+// BIRTHDAY CONTENT
+function startBirthday(){
+  const message=`Dear Oinkyyyyyyy 🌚🫶🏽,
+You are my soft pink dream 💖
+Everything is brighter with you ✨
+May your birthday overflow with love 🌸
+Giggles, sparkles, and cake 🎂
+Always remember you are deeply loved 💕
+Have the best day ever! 🫶🏽`;
+  let i=0; 
+  const typingText=document.getElementById("typingText");
+  (function type(){if(i<message.length){typingText.innerHTML+=message.charAt(i++);setTimeout(type,35);}})();
+
+  // Sparkle cursor
+  const sparkles=["✨","💖","🌸","⭐"]; 
+  let lastSound=0;
+  document.addEventListener("mousemove",(e)=>{
+    const s=document.createElement("div"); s.className="sparkle";
+    s.innerText=sparkles[Math.floor(Math.random()*sparkles.length)];
+    s.style.left=e.clientX+"px"; s.style.top=e.clientY+"px"; 
+    document.body.appendChild(s); 
+    setTimeout(()=>s.remove(),800);
+    if(Date.now()-lastSound>120){sparkleSound.currentTime=0; sparkleSound.play(); lastSound=Date.now();}
+  });
+
+  // Emoji & cake rain
+  const emojiSet=["💖","🎂","🌸","✨","🫶🏽","🎀","🍰"];
+  setInterval(()=>{
+    for(let i=0;i<3;i++){
+      const em=document.createElement("div"); em.className="emoji-confetti";
+      em.innerText=emojiSet[Math.floor(Math.random()*emojiSet.length)];
+      em.style.left=Math.random()*window.innerWidth+"px";
+      em.style.top="-30px";
+      em.style.setProperty("--x",(Math.random()*100-50)+"px");
+      em.style.setProperty("--y",(Math.random()*400+200)+"px");
+      document.body.appendChild(em);
+      setTimeout(()=>em.remove(),3000);
+    }
+  },300);
+
+  // Yes/No buttons
+  let noClicks=0; 
+  const noBtn=document.getElementById("noBtn"); 
+  const yesBtn=document.getElementById("yesBtn"); 
+  const funnyMsgs=["Nice try! 😜","You can't escape my cutie 💖","Haha, you can't say no 🫶🏽","Try again! 🐷✨"];
+
+  // No button teleports
+  noBtn.addEventListener("mouseenter",()=>{
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = randX + 'px';
+    noBtn.style.top = randY + 'px';
+  });
+
+  noBtn.addEventListener("click",()=>{
+    alert(funnyMsgs[Math.floor(Math.random()*funnyMsgs.length)]);
+    noClicks++; 
+    yesBtn.style.transform=`scale(${1 + noClicks*0.3})`;
+    if(noClicks>=4){noBtn.style.display='none'; yesBtn.style.transform=`scale(2)`;}
+  });
+
+  // Sparkle trail on Yes
+  yesBtn.addEventListener("mousemove",(e)=>{
+    const s=document.createElement("div");s.className="sparkle";
+    s.innerText=sparkles[Math.floor(Math.random()*sparkles.length)];
+    const rect=yesBtn.getBoundingClientRect();
+    s.style.left=(rect.left+rect.width/2 + (Math.random()*20-10))+"px";
+    s.style.top=(rect.top+rect.height/2 + (Math.random()*20-10))+"px";
+    document.body.appendChild(s); setTimeout(()=>s.remove(),600);
+  });
+}
+
+// SECRET MODAL
+document.getElementById("title").addEventListener("dblclick",()=>{document.getElementById("secret").style.display="flex";});
+function closeSecret(){ document.getElementById("secret").style.display="none"; }
+</script>
+</body>
+</html>
